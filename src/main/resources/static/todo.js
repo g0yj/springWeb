@@ -1,42 +1,95 @@
 console.log('todo js 실행');
-/*
+
+
 //1.POST
+function onPost(){
+let tcontent=document.querySelector('.tcontent').value;
+console.log(tcontent);
 $.ajax({
-         url : "/localhost/day04/index",
+         url : "/todo",
         method : "post",
-        data : {},
-        async: false,
-        success : r=>{console.log('통신성공');console.log(r)} ,
+        data : JSON.stringify({
+                    tcontent:tcontent,
+                    tstate:false
+                    }),
+        contentType: "application/json;charset=UTF-8",
+        success : r=>{
+        console.log('통신성공');console.log(r)
+         doGet()//재출력
+        } ,
         error : e=>{console.log('통신실패')} ,
    });
+}
+
+
+
 
 //2.GET
-$.ajax({
-         url : "/localhost/day04/index",
+doGet()
+function doGet(){
+    $.ajax({
+        url : "/todo",
         method : "get",
         data : {},
-        async: false,
-        success : r=>{console.log('통신성공');console.log(r)} ,
+        success : r=>{console.log('통신성공');console.log(r)
+                let html=``;
+                console.log(html)
+                r.forEach(t=>{
+                 html+=
+                          `  <div class="todo ${t.tstate ? 'successTodo':''} ">
+                                <div class="tcontent">${t.tcontent} </div>
+                                <div class="etcbtns">
+                                    <button onclick="onPut(${t.tno},${t.tstate})" type="button">상태변경</button>
+                                    <button onclick="onDelete(${t.tno})" type="button">제거하기</button>
+                                </div>
+                            </div>
+                            `
+
+                })
+
+                 document.querySelector('.todo_bottom').innerHTML=html;
+        } ,
+
+
+
         error : e=>{console.log('통신실패')} ,
    });
+
+}
+
 
 //3.PUT
-$.ajax({
-         url : "/localhost/day04/index",
+function onPut(tno,tstate){
+    $.ajax({
+        url : "/todo",
         method : "put",
-        data : {},
-        async: false,
-        success : r=>{console.log('통신성공');console.log(r)} ,
+        data : JSON.stringify({
+                                tno:tno,
+                                tstate:!tstate
+                                   }),
+        contentType: "application/json;charset=UTF-8",
+        success : r=>{
+            console.log('통신성공');console.log(r)
+            doGet()
+             } ,
+
+
         error : e=>{console.log('통신실패')} ,
    });
 
+}
 //4.DELETE
-$.ajax({
-         url : "/localhost/day04/index",
+function onDelete(tno){
+    $.ajax({
+        url : "/todo",
         method : "delete",
-        data : {},
-        async: false,
-        success : r=>{console.log('통신성공');console.log(r)} ,
+        data : {tno:tno},
+        success : r=>{
+            console.log('통신성공');console.log(r)
+            doGet()
+            } ,
         error : e=>{console.log('통신실패')} ,
    });
-*/
+
+}
+

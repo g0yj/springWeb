@@ -20,9 +20,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="f27a0f38-222a-4a6c-89e3-c3f219cae52e" object-ref="consoles/springweb" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />

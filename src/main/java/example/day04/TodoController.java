@@ -12,7 +12,7 @@ import java.util.List;
 // 스프링 Bin : 스프링 컨테이터에 저장된 객체
 
 @RestController
-@RequestMapping("/day04")
+@RequestMapping("/todo")
 
 public class TodoController {
 
