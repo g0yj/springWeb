@@ -15,7 +15,7 @@ public class PostMappingController {
 
    //1.
     @PostMapping("/method1")
-    // public String method1(@RequestParam String param1)  -> 테스트: form[param1=유재석] 
+    // public String method1(@RequestParam String param1)  -> 테스트: form으로전송[param1=유재석] / 가능하지만 데이터가 들어오지 않음. @RequestBody 사용해서 json형태로 보내야됨
     public String method1(@RequestBody String param1){//http://localhost:8080/day03/post/method1 -> 테스트: json{"param1":"유재석","param2":50}
         //테스트->http://localhost:8080/day03/post/method1    //post는 쿼리스트링도가능하지만 비추
         System.out.println("PostMappingController.method1");

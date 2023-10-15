@@ -17,8 +17,10 @@ public class TodoService {//서비스: 구현해야하는 기능들의 실제 �
 
         //2. 스트림 문법을 사용했을 때
         //List<TodoDto> todoDtos = IntStream.range(0,10).mapToObj(i->{리스트에 저장할 객체를 리턴}).collect(Collectors.toList());
-
-        //IntStream.range(시작정수,끝정수)
+                                        //IntStream.range(시작정수,끝정수)
+                                            //.mapToOjc(): return 값을 반환해서 배열/리스트에 대입
+                                            //.mapToOjc().collect(Collectors.toList()) : 해당 컬렉션 타입으로 반환해서 대입
+        //IntStream.range(0,10)
         List<TodoDto> todoDtos = IntStream.range(0, 10).mapToObj(i -> {
             TodoDto todoDto = TodoDto.builder()
                     .tno((long) i).title("Todo.." + i).dueDate(LocalDate.now())
