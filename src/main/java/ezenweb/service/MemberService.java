@@ -89,5 +89,22 @@ public class MemberService {
     }
 
 
+    //5.아이디 찾기
+    @GetMapping("/findId")
+    public MemberDto findId(MemberDto memberDto){
+        MemberDto memberDto=
+
+
+    }
+
+    //6. 비밀번호 찾기
+    @GetMapping("/findPw")
+    public MemberDto findPw(MemberDto memberDto){
+
+    }
+
+
+
+
 
 }
