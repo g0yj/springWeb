@@ -73,7 +73,7 @@ private TodoEntityRepository todoEntityRepository;
             return false;
     }
 
-    public boolean doDelete(@RequestParam int tno){
+    public boolean doDelete( int tno){
 
             //1. 삭제할 엔티티 찾기 [삭제할 pk번호]
         todoEntityRepository.deleteById(tno); //전달받은tno 있으니까 findById 사용 가능.
