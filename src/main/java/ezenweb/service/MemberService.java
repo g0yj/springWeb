@@ -20,7 +20,7 @@ public class MemberService {
 
     //1. 회원가입
     @Transactional//트랜잭션: 여러개 sql을 하나의 최소 단위로[성공/실패!! 함수 내 일부 sql만 성공은 불가능]
-    public boolean postMember(@RequestBody MemberDto memberDto) {
+    public boolean postMember(MemberDto memberDto) {
         System.out.println("memberDto = " + memberDto);
         //1. dto->entity 변경 후 repository를 통한 insert  후 결과 entity받기
         MemberEntity memberEntity = memberRepository.save(memberDto.toEntity());
@@ -113,7 +113,7 @@ public class MemberService {
     //5. 로그인  (두가지 방법있음. 1017 3시40분)
     @Autowired
     private HttpServletRequest request; //request객체도 스프링 컨테이너에 등록된 상태이기 때문에 그냥 꺼내오면 됨.
-    public boolean login(MemberDto memberDto) {
+            public boolean login(MemberDto memberDto) {
         //1.입력받은 데이터[아이디,비번] 검증
         List<MemberEntity> memberEntities =memberRepository.findAll();
 
