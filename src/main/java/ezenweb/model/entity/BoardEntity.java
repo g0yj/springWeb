@@ -30,8 +30,13 @@ public class BoardEntity extends BaseTime {
                                         // 상속 해주는 필드: 작성일, 수정일
     @Column(columnDefinition = "longtext" ,nullable = true)
     private String bfile;
-    @Column
-    private int mno;
+
+
+    @ToString.Exclude//ToString 함수를 제외하는 필드
+    @JoinColumn(name="mno")//FK 필드로 사용 (name="fk필드명")
+    @ManyToOne//다수가 하나에게 FK
+                //실제 DB에는 엔티티의 ID(pk)로 저장됨.
+    private MemberEntity memberEntity;
 
 
     //entity->dto로 변환하는 함수[상황에 따라 여러개 선언]
@@ -44,7 +49,7 @@ public class BoardEntity extends BaseTime {
                 .bcontent(this.bcontent)
                 .bfile(this.bfile)
                 .bview(this.bview)
-                .mno(this.mno)
+                .mno(this.memberEntity.getMno())
                 .cdate(this.getCdate())
                 .udate(this.getUdate())
                 .build();
