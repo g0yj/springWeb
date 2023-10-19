@@ -5,6 +5,8 @@ import ezenweb.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+// IOC : 제어역전(객체 관리를 스프링에게 위임<- 개발자가 편의성. (객체 공유해서 쓰려고. 서로 다른 객체 사용했을 때 발생할 수 있는 오류를 줄일 수 있음.))
+// DI: 의존성 주입[스프링이 객체를 관리하기 때문에. 스프링에게 객체를 의존하고 가져다가 씀.]
 @RestController
 @RequestMapping("/member")
 public class MemberController {

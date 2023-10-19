@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity//해당 클래스를 DB 테이블과 매핑 [엔티티 클래스가 곧 테이블!! 엔티티 객체가 테이블 내 레코드 한개. 엔티티클래스는 db테이블 한개 ]
 @Table(name="member")//db테이블명 정의 [생략 시 해당 클래스명이 곧 db테이블명으로 자동생성]
@@ -27,6 +29,12 @@ public class MemberEntity extends BaseTime{
     @ColumnDefault("'user'")// @ColumnDefault("기본값") 지정. 문자이기 때문에 ''를 넣어줘야함.
     private String mrole;   //회원등급(일반,관리자)
 
+    //게시물목록=내가 쓴 게시물
+
+    @Builder.Default //빌더패턴 사용 시 해당 필드의 값을 기본 값으로 사용한다.
+    @OneToMany(mappedBy = "memberEntity")//하나가 다수에게[PK]
+            //List는 실제 DB에 영향을 미치지 않음. 기본적으로 db는 양방향아님!
+    private List<BoardEntity> boardEntityList = new ArrayList<>();
 
    //entitiy-> dto 변환 함수(dto->entity)
       //service에서 entity 정보를 controller 이동하기 위해.

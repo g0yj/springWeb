@@ -1,10 +1,12 @@
 package example.day05과제2;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +33,7 @@ public class PhoneService {
     public List<PhoneDto> doGet() {
         System.out.println("PhoneService.doGet");
 
-        List<PhoneEntity> entities = phoneEntityRepository.findAll();
+        List<PhoneEntity> entities = phoneEntityRepository.findAll(Sort.by(Sort.Order.asc("name")));
 
         //List<Entity> 를 List<DTO> 로 변환
         List<PhoneDto> list = new ArrayList<>();
@@ -49,7 +51,7 @@ public class PhoneService {
         });
         return list;
     }
-
+    @Transactional
     public boolean doPut( PhoneDto dto) {
         System.out.println("PhoneService.doPut");
         System.out.println("put서비스실행");
@@ -58,8 +60,9 @@ public class PhoneService {
             PhoneEntity updateEntity = entities.get();
             updateEntity.setName(dto.getName());
             updateEntity.setNumber(dto.getNumber());
+            return true;
         }
-        return true;
+       return false;
     }
 
     public boolean doDelete(int pno) {
