@@ -65,4 +65,15 @@ public class MemberController {
         return result;
     }
 
+
+    //7. [post]아이디찾기
+    @PostMapping("/findId")
+    public boolean findId(@RequestBody MemberDto memberDto){
+        return false;
+    }
+
+
+
 }
+
+
