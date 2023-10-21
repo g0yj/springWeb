@@ -65,4 +65,23 @@ public class MemberController {
         return result;
     }
 
+
+    //7. [post]아이디찾기 - 이름/전화번호
+    @PostMapping("/findId")
+    public String findId(@RequestParam String mname, @RequestParam String mphone){
+        System.out.println("MemberController.findId");
+        return memberService.findId(mname,mphone);
+    }
+
+
+    //8.[post]비밀번호찾기- 이메일/전화번호
+    @PostMapping("/findPw")
+    public String findPw(@RequestParam String memail,@RequestParam String mphone){
+        System.out.println("MemberController.findPw");
+        return memberService.findPw(memail,mphone);
+    }
+
+
 }
+
+

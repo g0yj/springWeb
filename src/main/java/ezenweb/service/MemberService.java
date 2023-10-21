@@ -138,4 +138,34 @@ public class MemberService {
         return false;
     }
 
+
+    //7. 아이디찾기 - 이름/전화번호
+    public String findId(String mname,String mphone){
+        System.out.println("MemberService.findId");
+            List<MemberEntity> memberEntities=memberRepository.findAll();
+            for(MemberEntity e:memberEntities){
+                if(e.getMname().equals(mname)&&e.getMphone().equals(mphone)){
+                    return e.getMemail();
+                }
+            }
+        return null;
+    }
+
+    //8. 비밀번호찾기 - 이메일/전화번호
+    public String findPw(String memail,String mphone){
+        System.out.println("MemberController.findPw");
+        List<MemberEntity> memberEntities = memberRepository.findAll();
+        for(MemberEntity e:memberEntities){
+            if(e.getMemail().equals(memail)&&e.getMphone().equals(mphone)){
+                return e.getMpassword();
+            }
+        }
+        return null;
+    }
+
+
+
+
+
+
 }
