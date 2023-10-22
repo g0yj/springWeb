@@ -11,7 +11,7 @@ function 컴포넌트4(){
      </>)
 }
 
-function 내가만든태그속성(props){ //props:컴포넌트의 매개변수(객체)
+function 내가만든태그속성(props){ //props:컴포넌트의 매개변수(객체로들어옴)
     //----------JS구역--------------------------//
     console.log(props);
 

@@ -37,7 +37,8 @@ public class GetMappingController {
     }
 
     //4. 여러개 매개변수를 DTO로 자동 변환 매핑
-        // DTO로 받을 수 있기 때문에 여러 필드를 하나씩 받을 필요도 없고 받은 걸 객체화 해서 전달할 필요 없음
+        // DTO로 받을 수 있기 때문에 여러 필드를 하나씩 받을 필요도 없고 받은 걸 객체화 해서 전달할 필요 없음.(multi.xx 이런거 안해도됨)
+        // GETTER/SETTER가 있어야 하며, DTO의 필드명이 일치.
         //@RequestParam를 사용하지 않거나 @ModelAttribute(5번)를 사용
     @GetMapping("/method4")
     public String method4(ParamDto paramDto){ // http://localhost:80/day03/get/method4?param1=유재석&param2=50

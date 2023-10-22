@@ -1,5 +1,5 @@
-import todo from './todo.js';
-export default function todoList( props ){
+import Todo from './todo.js';
+export default function TodoList( props ){
     let response = [
             {tcontent : '리액트배우기' } ,
             {tcontent : '자바배우기' } ,
@@ -12,16 +12,16 @@ export default function todoList( props ){
             <h1> 나만의 할일 목록 </h1>
             <div className="todo_top">
                 <input className="tcontent" type="text"/>
-                <button onclick="onPost()" type="button"> 등록 </button>
+                <button type="button"> 등록 </button>
             </div>
-
+        </div>
 
 
 
         <div className="CommentListBox">
             {
                 response.map(r=>{
-                    return( <todo tcontent={r.tcontent} />);
+                    return( <Todo tcontent={r.tcontent} />);
                 })
             }
 

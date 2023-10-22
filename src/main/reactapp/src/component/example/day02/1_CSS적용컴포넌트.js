@@ -5,7 +5,10 @@
 
     2-1 마크업 style속성={{속성명:속성값, 속성명:속성값}}
 
-    3-1
+    3. css 파일에서 순수 css문법을 사용
+        //1. 마크업에 className명 정의
+        //2. css파일에 css 작성
+        //3. 적용할 컴포넌트가 잇는 파일 내 import [import styles form '파일경로']
 
 */
 import styles from './컴포넌트.css';
