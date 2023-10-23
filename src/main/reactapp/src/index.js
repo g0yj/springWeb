@@ -13,13 +13,19 @@ import reportWebVitals from './reportWebVitals';
 //import 도서목록 from './component/example/day01/과제1_도서목록.jsx'
 //import CSS컴포넌트 from './component/example/day02/1_CSS적용컴포넌트.js'
 //import CommentList from './component/example/day02/CommentList.js'
-import TodoList from './component/example/day02/todoList.js'
+//import TodoList from './component/example/day02/todoList.js'
+//import 라우터컴포넌트 from './component/example/day03/1_라우터컴포넌트.js'
+import Index from './component/Index.js'
+
+
+
 //1. index.html에 <div id="root"> dom객체 호출
 const root = ReactDOM.createRoot(document.getElementById('root'));
 //2. 리액트랜더링(JSX-->HTML로 변환 )
    //<React.StrictMode> :예외처리 컴포넌트
 //root.render(<React.StrictMode>  <App /> </React.StrictMode>);
-root.render(<React.StrictMode>  <TodoList/> </React.StrictMode>);
+//root.render(<React.StrictMode>  <Index/> </React.StrictMode>);
+root.render(<Index/>);
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
