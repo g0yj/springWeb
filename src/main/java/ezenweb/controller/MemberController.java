@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 // DI: 의존성 주입[스프링이 객체를 관리하기 때문에. 스프링에게 객체를 의존하고 가져다가 씀.]
 @RestController
 @RequestMapping("/member")
+@CrossOrigin("http://192.168.17.21:3000")//교차 리소스를 공유하겠다.[해당주소=리액트주소] 임시로 쓰겠음. 추후 배포시에는 서버 두개 합칠거임.
 public class MemberController {
     @Autowired
     private MemberService memberService;
