@@ -15,11 +15,12 @@ export default function Signup( props ){
         }
         console.log('회원가입정보받음'+info)
         axios
-            .post('http://192.168.17.21:80/member/post',info)
+            //.post('http://localhost:80/member/post',info)//리액트스프링 통합했으면 아래 코드로 바꿀 수 있음.
+            .post('/member/post',info)
             .then(r=>{console.log(r)
                 if(r.data){
                     alert('회원가입성공')
-                    window.location.href='/login'
+                    window.location.href='/login'   //get방식요청!
                     }
                 else{alert('회원가입실패')}
             })
