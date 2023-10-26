@@ -1,5 +1,8 @@
+//231026 2시 . 이메일 중복검사 흐름
+
 import styles from '../../css/login.css'
 import axios from 'axios'
+import{useState} from 'react';
 
 export default function Signup( props ){
 
@@ -29,12 +32,41 @@ export default function Signup( props ){
 
     }
 
+    //2. 이메일 중복검사[이메일 입역할 때마다]
+    let [memail,setMemail]=useState('') //import {useState} from 'react';
+    let[memailCheck,setMemailCheck]=useState('')
+
+    const emailInputChange=(e)=>{
+    console.log('아이디유효성검사함수실행')
+       /*
+       1. 기존방법
+        let memail =document.querySelector('.memail').value; console.log(memail)
+        */
+
+        //2. 새로운방법 [useState 사용]
+        let memailInput=e.target.value;
+        console.log('입력받은값> '+memailInput);
+
+        setMemail(memailInput);
+
+        //-------------AXIOS-----------------------//
+        axios
+            .get('/member/findMemail',{params:{'memail':memailInput}}) //쿼리스트링
+            .then(r=>{
+                console.log('아이디유효성검사 통신 성공')
+                if(r.data){setMemailCheck('사용중인 아이디')}//중복
+                else{setMemailCheck('사용가능한아이디')}//중복아님
+
+            })
+
+    }
 
     return(<>
             <div className="loginContainer">
                 <h3>회원가입페이지</h3>
                 <form>
-                    이메일[아이디]: <input type="text" className="memail"/><br/>
+                    이메일[아이디]: <input type="text" className="memail" onChange={emailInputChange}/><br/>
+                    <div>{memailCheck}</div>
                     비밀번호: <input type="password" className="mpassword"/><br/>
                     비밀번호확인: <input type="password" className="mpassword2"/><br/>
                     이름: <input type="text" className="mname"/><br/>

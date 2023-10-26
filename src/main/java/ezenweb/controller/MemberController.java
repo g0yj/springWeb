@@ -86,6 +86,16 @@ public class MemberController {
     }
 
 
+    //9. 이메일 중복검사
+    @GetMapping("/findMemail")
+    public boolean getFindEmail(@RequestParam String memail){
+                    //signup.js에서 파라미터로 전달함.
+        System.out.println("MemberController.getFindEmail");
+        System.out.println("memail = " + memail);
+
+        return memberService.getFindEmail(memail);
+    }
+
 }
 
 

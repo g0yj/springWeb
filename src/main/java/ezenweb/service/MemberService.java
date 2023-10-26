@@ -59,6 +59,7 @@ public class MemberService {
     //2.회원 정보 호출
     @GetMapping
     public MemberDto getMember() {
+        System.out.println("MemberService.getMember");
         //1.
         Object session = request.getSession().getAttribute("loginDto");
         //2.
@@ -134,8 +135,9 @@ public class MemberService {
     //6. [get]로그아웃
 
     public boolean logout() {
+        System.out.println("MemberService.logout");
         request.getSession().setAttribute("loginDto",null);
-        return false;
+        return true;
     }
 
 
@@ -163,7 +165,16 @@ public class MemberService {
         return null;
     }
 
+    //9. 이메일 중복검사
+    public boolean getFindEmail(String memail){
+       System.out.println("getFindEmail 서비스 도착");
+       System.out.println("memail = " + memail);
 
+       boolean result =memberRepository.existsByMemail(memail);
+                                        //findByMemail(): 리파지토리에서 재정의해서 만들어냄!!
+        System.out.println("서비스결과> "+result);
+      return result;
+    }
 
 
 
