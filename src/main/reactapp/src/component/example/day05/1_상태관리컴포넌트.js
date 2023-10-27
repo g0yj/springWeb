@@ -13,7 +13,9 @@ export default function 상태관리컴포넌트( props ){
                 [1] : 그 값을 수정 할 수 있는 함수.bound dispatchSetState
                     -*해당 컴포넌트만 재실행[랜더링]  value2증가함수 누를때마다 재랜더링 alert뜸..!! value1버튼은 처음에 alert뜨고 나머지는 반응x
                     -setValue2(변경할값) :
-            let [ 변수명 , set함수명 ] = useState( 초기값 )
+            let [ 변수명(초기값) , set함수명(수정함수) ] = useState( 초기값 )
+                                            //초기값 : 데이터,객체,배열,함수
+                                            //useState() : 반환값 배열!
         */
    let 상태함수= useState('훅이란무엇인가?')
     console.log(상태함수) //[0]훅이란무엇인가 [1]f()

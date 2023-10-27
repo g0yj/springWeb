@@ -25,7 +25,7 @@ import Axios컴포넌트 from './example/day04/1_Axios컴포넌트'
 
 import Login from './member/login'
 import Signup from './member/signup'
-
+import Info from './member/info'
 
 export default function Index( props ){
     return(<>
@@ -52,7 +52,8 @@ export default function Index( props ){
                     {/* MEMBER*/}
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/signup' element={<Signup/>}/>
-                        <Route path='/logout' element={<컴포넌트1/>}/>
+                        <Route path='/info' element={<Info/>}/>
+
                     </Routes >
                 <Footer/>
             </BrowserRouter>

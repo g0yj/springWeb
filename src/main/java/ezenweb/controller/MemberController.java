@@ -96,6 +96,8 @@ public class MemberController {
         return memberService.getFindEmail(memail);
     }
 
+
+
 }
 
 

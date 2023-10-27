@@ -102,6 +102,8 @@ public class MemberService {
         //2. 만약에 삭제할 엔티티가 반환/존재하면
         if(optionalMemberEntity.isPresent()){
             memberRepository.deleteById(mno);
+            //회원삭제 성공 시 세션 날려;야됨. 이미 로그아웃함수에 포함되어있으니 함수 호출 방식으로 고고!
+            logout();
             return true;
         }
 
