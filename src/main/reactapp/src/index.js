@@ -15,17 +15,17 @@ import reportWebVitals from './reportWebVitals';
 //import CommentList from './component/example/day02/CommentList.js'
 //import TodoList from './component/example/day02/todoList.js'
 //import 라우터컴포넌트 from './component/example/day03/1_라우터컴포넌트.js'
-import Index from './component/Index.js'
+//import Index from './component/Index.js'
 //import 상태관리컴포넌트 from './component/example/day05/1_상태관리컴포넌트.js'
-//import 생명주기컴포넌트 from './component/example/day05/2_생명주기컴포넌트.js'
+import 생명주기컴포넌트 from './component/example/day05/2_생명주기컴포넌트.js'
 
 
 //1. index.html에 <div id="root"> dom객체 호출
 const root = ReactDOM.createRoot(document.getElementById('root'));
 //2. 리액트랜더링(JSX-->HTML로 변환 )
    //<React.StrictMode> :예외처리 컴포넌트
-root.render(<React.StrictMode>  <Index /> </React.StrictMode>);
-//root.render( <생명주기컴포넌트/> );
+//root.render(<React.StrictMode>  <Index /> </React.StrictMode>);
+root.render( <생명주기컴포넌트/> );
 
 
 //root.render(<Index/>);

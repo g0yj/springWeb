@@ -1,7 +1,7 @@
 //231027 9시55분
 
 import {Link} from 'react-router-dom';
-import styles from'../css/header.css'
+import styles from '../css/header.css'
 
 import axios from 'axios';
 import{useState,useEffect} from 'react'

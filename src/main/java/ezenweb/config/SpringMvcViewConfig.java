@@ -15,11 +15,12 @@ public class SpringMvcViewConfig extends WebMvcConfigurerAdapter {
                                                     //spring : resources폴더 의미함.
         registry.addViewController( "/**/{spring:\\w+}").setViewName("forward:/");
 
+
         //spring 2.6이상 버전에서는 해당 패턴 경로 못 찾음 (우린 지금 springboot: 2.7.17 버전 사용 중임...!)
-            //해결-> application.properties에 추가로 적어줘야됨. (spring.mvc.pathmatch.matching-strategy = ant_path_matcher)
+        //해결-> application.properties에 추가로 적어줘야됨. (spring.mvc.pathmatch.matching-strategy = ant_path_matcher)
         registry.addViewController( "/{spring:\\w+}/**{spring:?!(\\.js|\\.css)$}").setViewName("forward:/");
-                                                                // **/ : 경로 설정 방법임.
-                                                                            //공문 참조!!  **/**/**/ 이런식으로 최대 갯수 정해줘야 새로고침해도 주소 오류 안남. 명세서 작성해서 전달해야됨.
+            // **/ :(와일드카드) 경로 설정 방법임
+            //공문 참조!!  **/**/**/ 이런식으로 최대 갯수 정해줘야 새로고침해도 주소 오류 안남. 명세서 작성해서 전달해야됨.
 
 
     }
