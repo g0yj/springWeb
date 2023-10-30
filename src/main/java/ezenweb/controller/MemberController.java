@@ -54,6 +54,7 @@ public class MemberController {
         return result;
     }
 
+/*--------------시큐리티 사용으로 로그인, 비밀번호 사용 안함!!--------------------------------------
 
     //5. [post] 로그인 : 요청(아이디,비번) 응답(성공/실패)
     @PostMapping("/login")
@@ -69,6 +70,7 @@ public class MemberController {
         return result;
     }
 
+--------------------------------------------------------------------------------------------------*/
 
     //7. [post]아이디찾기 - 이름/전화번호
     @PostMapping("/findId")

@@ -36,14 +36,41 @@ export default function Login( props ){
     return(<>
             <div className="loginContainer">
                 <h3>로그인페이지</h3>
-                <form>
-                    이메일[아이디]: <input type="text" className="memail"/><br/>
-                    비밀번호: <input type="password" className="mpassword"/><br/>
-                    {/*Link 컴포너트 사용하려면 import 해야됨*/}
-                    <Link to=''>아이디찾기</Link>
-                    <Link to=''>비밀번호찾기</Link>
-                    <button type="button" onClick={onLogin}>로그인</button>
+                <form action="/member/login" method="post">
+                    아이디 <input type="text" placeholder='email address' name='memail' />
+                    비밀번호 <input type="password"  placeholder='password' name='mpassword' />
+                    <Link to=''>아이디찾기 </Link> <Link to=''> 비밀번호찾기 </Link>
+                    <button type="submit">로그인</button>
                 </form>
             </div>
         </>)
    }
+
+
+ /*
+
+     // 1. AXIOS 이용한 로그인 처리 형식
+         <form>
+             아이디 <input
+                 type="text"
+                 placeholder='email address'
+                 className='memail' />
+
+             비밀번호 <input type="password"
+                 placeholder='password'
+                 className='mpassword' />
+
+             <Link to=''>아이디찾기 </Link> <Link to=''> 비밀번호찾기 </Link>
+             <button onClick={ onLogin } type="button">로그인</button>
+         </form>
+
+
+      <form action="전송할HTTP주소" method="HTTP메소드">
+      // 2.
+      <form action="/member/login" method="post">
+          아이디 <input type="text" placeholder='email address' name='memail' />
+          비밀번호 <input type="password"  placeholder='password' name='mpassword' />
+          <Link to=''>아이디찾기 </Link> <Link to=''> 비밀번호찾기 </Link>
+          <button type="submit">로그인</button>
+      </form>
+ */

@@ -24,6 +24,7 @@ dependencies { //외부 라이브러리 추가하는 곳 => 자동으로 해당 
     //인텔리제이 플러그인 lombok 플러그 설치
     implementation 'org.springframework.boot:spring-boot-starter-web'//springboot web
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'//JPA라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-security'//Spring security 라이브러리
 }
 
 tasks.named('test') {
