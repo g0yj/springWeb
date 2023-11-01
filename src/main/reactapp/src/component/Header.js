@@ -77,7 +77,7 @@ export default function Header( props ){
                     </>)
                     : (<>
                         <li>{login.memail}님</li>
-                        <li><Link to='/info'>내정보</Link></li>
+                        <li><a href='/info'>내정보</a></li> {/*Link사용하면 라우터 전달로 스프링에서 관리할 수 있는 주소가 아님. 시큐리티를 거치지 않고 지나가기 때문에 권한 안먹힘..!! link쓰면 권한 되지 않아도 403오류없이 들어가짐.*/}
                         <li><div onClick={logout}>로그아웃</div></li>
                     </>)
                 }
@@ -88,3 +88,10 @@ export default function Header( props ){
         </header>
     </>)
             }
+
+/*
+    <>  </>
+ : 리액트의 Fragment 요소를 나타냄. Fragment는 부모 요소 없이 여러 요소를 그룹화할 때 사용.
+
+
+*/

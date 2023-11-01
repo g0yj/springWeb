@@ -2,12 +2,15 @@ package ezenweb.service;
 
 import ezenweb.model.dto.BoardDto;
 import ezenweb.model.entity.BoardEntity;
+import ezenweb.model.entity.MemberEntity;
 import ezenweb.model.repository.BoardEntityRepository;
+import ezenweb.model.repository.MemberEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,12 +19,29 @@ import java.util.Optional;
 public class BoardService {
     @Autowired
     private BoardEntityRepository boardEntityRepository;
+    @Autowired//write() 에서 사용
+    private MemberService memberService;
+    @Autowired
+    private MemberEntityRepository memberEntityRepository;
 
     @Transactional
     public boolean write(BoardDto boardDto){
-        //1.dto를 entity로 변환 후 저장된 엔티티 반환
-        BoardEntity boardEntity = boardEntityRepository.save(boardDto.saveToEntiry());
-        //2.
+        //1. FK 키의 엔티티를 찾는다
+                //[FK로 사용할 PK를 알고 있어야함. 세션이나 매개변수로 가져오기]
+                //-> 작성자PK=로그인 세션
+                //-> 카테고리번호 = 입력받은 DTO, 매개변수로 가져옴.
+        Optional<MemberEntity>memberEntityOptional=memberEntityRepository.findById(memberService.getMember().getMno());
+         //유효성검사
+        if(!memberEntityOptional.isPresent()){
+            return false;
+        }
+
+        BoardEntity boardEntity = boardEntityRepository.save(boardDto.saveToEntity());
+
+        boardEntity.setMemberEntity(memberEntityOptional.get());
+
+        memberEntityOptional.get().getBoardEntityList().add(boardEntity);
+
         if(boardEntity.getBno()>=1){return true;}
         return false;
 

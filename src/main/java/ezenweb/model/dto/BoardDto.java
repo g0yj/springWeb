@@ -22,7 +22,7 @@ public class BoardDto {
 
     //dto->entity
     //1. entity 저장할 때
-    public BoardEntity saveToEntiry(){
+    public BoardEntity saveToEntity(){
         return BoardEntity.builder()
                 .btitle(this.btitle)
                 .bcontent(this.bcontent)

@@ -11,6 +11,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +26,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MemberService implements UserDetailsService {
+public class MemberService implements
+                                        UserDetailsService, //일반회원서비스: loadUserByUsername 메소드 구현[로그인처리하는 메소드]
+                                        OAuth2UserService<OAuth2UserRequest,OAuth2User> {
     //-------------------------------------------------------//
         //p.687
         //1. UserDetailsSercive 구현체
@@ -93,6 +100,13 @@ public class MemberService implements UserDetailsService {
     //-----------loadUserByUsername(String memail) 시큐리티 사용 [로그인] 함수 끝!!--------------------------------------------//
 
 
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        //1. 로그인을 성공한 oauth2 계정의 정보 호출
+        OAuth2User oAuth2User=new DefaultOAuth2UserService().loadUser(userRequest);
+        System.out.println("oAuth2User"+oAuth2User);
+        return null;
+    }
 
     @Autowired
     private MemberEntityRepository memberRepository;
@@ -144,7 +158,9 @@ public class MemberService implements UserDetailsService {
         }
     */
 
-    //2.회원 정보 호출
+    @Autowired
+    public MemberEntityRepository memberEntityRepository;
+    //2.회원 정보 호출 (header.js[axios] , boardService[write] 에서 쓰임.)
     @Transactional
     @GetMapping
     public MemberDto getMember() {
@@ -168,15 +184,18 @@ public class MemberService implements UserDetailsService {
         Object o =SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(o.toString());
         //1.만약에 인증 결과가 실패이면/ 없으면
-        if(o.equals("anonymousUser")){
+        if(o.equals("anonymousUser")){ //로그인 실패하면 console에 anonymousUser찍힘
             return null; //로그인 안했..
         }
         //2. 인증결과에 저장된 UserDetails로 타입변환
-        UserDetails userDetails =(UserDetails)o;
-        //3.UserDetails의 정보를 memberDto에 담아서 반환
-        return MemberDto.builder()
-                .memail(userDetails.getUsername())
-                .build();
+        UserDetails userDetails =(UserDetails)o; //UserDetails: 로그인 결과를 가지고 있는 객체
+            //로그인상태에 필요한 데이터 구성(BoardService write() 함수에 사용해야도미)
+            MemberEntity memberEntity =memberEntityRepository.findByMemail(userDetails.getUsername());
+            return MemberDto.builder()
+                    .memail(memberEntity.getMemail())
+                    .mno(memberEntity.getMno())
+                    .build();
+
     }
 
 
