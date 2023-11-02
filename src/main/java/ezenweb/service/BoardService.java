@@ -1,6 +1,7 @@
 package ezenweb.service;
 
 import ezenweb.model.dto.BoardDto;
+import ezenweb.model.dto.MemberDto;
 import ezenweb.model.entity.BoardEntity;
 import ezenweb.model.entity.MemberEntity;
 import ezenweb.model.repository.BoardEntityRepository;
@@ -24,27 +25,34 @@ public class BoardService {
     @Autowired
     private MemberEntityRepository memberEntityRepository;
 
-    @Transactional
+    @Transactional//양방향에서 setter쓰니까 트랜잭셔널 꼭 해줘야됨!!!!!!! ()
     public boolean write(BoardDto boardDto){
-        //1. FK 키의 엔티티를 찾는다
+     //1. FK 키의 엔티티를 찾는다(로그인된 멤버찾기)======================================================
                 //[FK로 사용할 PK를 알고 있어야함. 세션이나 매개변수로 가져오기]
                 //-> 작성자PK=로그인 세션
                 //-> 카테고리번호 = 입력받은 DTO, 매개변수로 가져옴.
+            //1.로그인된 멤버 엔티티 찾기
+        MemberDto loginDto= memberService.getMember();
+        if(loginDto==null){return false;}
+            //2. 로그인된 회원정보를 가진 pk엔티티 찾기
         Optional<MemberEntity>memberEntityOptional=memberEntityRepository.findById(memberService.getMember().getMno());
-         //유효성검사
+         //유효성검사(로그인이 안된 상태는 글쓰기 실패)
         if(!memberEntityOptional.isPresent()){
             return false;
         }
-
+      //로그인된 멤버찾기 끝================================================================================================
+  // 단방향 저장[게시판엔티티등록. 게시물 엔티티에 회원엔티티 넣어주기]
+        //1.게시물생성[pk에 해당하는 레코드 생성]
         BoardEntity boardEntity = boardEntityRepository.save(boardDto.saveToEntity());
-
+        //2. 생성된 게시물에 작성자엔티티 넣어주기[ fk 넣어주기]
         boardEntity.setMemberEntity(memberEntityOptional.get());
-
+   //단반향 저장끝
+        //양방향 저장
         memberEntityOptional.get().getBoardEntityList().add(boardEntity);
+        //양방향저장끝
 
         if(boardEntity.getBno()>=1){return true;}
         return false;
-
 
     }
 

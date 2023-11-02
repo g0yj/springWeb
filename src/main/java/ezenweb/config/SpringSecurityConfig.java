@@ -25,16 +25,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
                             //http보안(필터)
-        //super.configure(http);  //주석 안하면 기존에 만들어져있는 시큐리티 뜸.
+        //super.configure(http);  //주석 안하면 그냥 페이지 나옴.(시큐리티적용페이지) localhost로 들어가면 localhost/login으로 이동됨.
+
+        //http.csrf().disable();//모든 http에서 csrf 사용 안함
+        //http.csrf().ignoringAntMatchers("/signup") //특정 http에만 csrf 사용 안하겠다.
+
 
         //0. 인증(로그인)된 인가(권한/허가) 통해 페이지 접근 제한
+
         http.authorizeHttpRequests()//1.인증된 권한에 따른 HTTP 요청 제한
                 .antMatchers("/info").hasRole("USER") //UserDtails에 있는 권한명과 일치. 인증된 권한 중에 ROLE_USER이면 해당 HTTP 허용
-                .antMatchers("/**").permitAll();//모든 페이지는 권한 모두 허용
+                .antMatchers("/board/write").hasRole("USER") //UserDtails에 있는 권한명과 일치. 인증된 권한 중에 ROLE_USER이면 해당 HTTP 허용
+                .antMatchers("/**").permitAll();//모든 페이지는 권한 모두 허용(가장 아래 적어야됨.)
+
         //1. 인증(로그인) 커스텀
+
         http.formLogin()                                        // 1. 시큐리티 로그인 사용 [form전송 밖에 안됨 . axios는 폼전송 아니었음. 이것도 커스텀해줘야됨]
                 .loginPage("/login")                            //2. 시큐리티 로그인으로 사용할 VIEW페이지의 HTTP 주소[우린 라우터 쓰는중..!!] <- 우리가 페이지 쓰겠다
-                .loginProcessingUrl("/member/login")            //3. 시큐리티 로그인(인증)처리 요청시 사용할 HTTP 주소 <-js <form action="주소"> 의 주소와 맞춰야됨
+                .loginProcessingUrl("/member/login")            //3. 시큐리티 로그인(인증)처리 요청시 사용할 HTTP 주소 <-아무거나 해도 되지만, js <form action="주소"> 의 주소와 맞춰야됨
                                                                      //시큐리티 사용하기 전에 Controller에 만들어뒀던 로그인/로그아웃 함수 없애기!
                                                                      //HTTP'/member/login' POST 요청 시 -> controller 거치지 않고 MemberService의 loadUserByUsername로 이동
                 //.defaultSuccessUrl("/")     //4. 로그인 성공 시 이동할 HTTP 주소

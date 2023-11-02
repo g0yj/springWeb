@@ -26,6 +26,8 @@ import Axios컴포넌트 from './example/day04/1_Axios컴포넌트'
 import Login from './member/login'
 import Signup from './member/signup'
 import Info from './member/info'
+import BoardList from'./board/BoardList'
+import BoardWrite from'./board/BoardWrite'
 
 export default function Index( props ){
     return(<>
@@ -54,6 +56,9 @@ export default function Index( props ){
                         <Route path='/signup' element={<Signup/>}/>
                         <Route path='/info' element={<Info/>}/>
 
+                    {/*Board*/}
+                    <Route path='/board/list' element = { <BoardList /> } />
+                    <Route path='/board/write' element = { <BoardWrite /> } />
                     </Routes >
                 <Footer/>
             </BrowserRouter>

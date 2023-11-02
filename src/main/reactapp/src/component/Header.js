@@ -31,7 +31,7 @@ export default function Header( props ){
 
             })
     }
-        // - 회원정보호출[로그인 여부 확인]
+        // - 회원정보호출[로그인 여부 확인] - js에서 로그인 기능 구현하는 방법(브라우저 자체에서 세션을 제공)
        //-----------------컴포넌트 생성될 때 1번-------------------------//
                     //useEffect(()=>{},[]) 안에 axios 안 넣으면 무한루프빠짐
         useEffect(()=>{
@@ -44,6 +44,7 @@ export default function Header( props ){
                     //localstorage : 모든 브라우저 탭/창공유, 브라우저가 꺼져도 유지, 자동로그인 기능, 로그인상태유지(로그인여부)
                     //sessionstorage : 탭/창 종료 시 사라짐. 페이지전환은 유지됨! 로그인여부(로그인상태저장)
 
+                //f12에서 세션 저장된게 보고 싶다면 이걸 해줘야되는거임.
                     //세션/쿠키 저장: .setItem(key,value)
                     //세션/쿠키 호출: .getItem(key)
                     //세션/쿠키 삭제 : .remove(key)
@@ -65,7 +66,7 @@ export default function Header( props ){
                 <li><Link to='/example'>리택트예제</Link></li>
                 <li><Link to='/example/day02/todoList'>TODO</Link></li>
                 <li><Link to='/example/day02/CommentList'>비회원게시판</Link></li>
-                <li><Link to='/'>회원게시판</Link></li>
+                <li><Link to='/board/list'>회원게시판</Link></li>
 
                 {/* 삼항연산자-> 조건?참:거짓*/}
 

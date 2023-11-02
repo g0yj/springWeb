@@ -46,8 +46,11 @@ public class MemberService implements
 	        - @org.springframework.beans.factory.annotation.Autowired(required=true)
     */
 
+
     //@Autowired : 사용 불가!! (스프링 컨테이너에 등록 안된 빈(객체)이므로 불가능 .. 따라서 new ()로 만들어줌!! )
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+
 
 
     @Override
@@ -65,7 +68,7 @@ public class MemberService implements
                 .authorities("ROLE_USER") //인가(허가나 권한) 정보
                 .build();
         return userDetails;
-        //오류: There is no PasswordEncoder mapped for the id "null"
+        //오류: There is no PasswordEncoder mapped for the id "null" 패스워드 인코더 안해서 나는 오류.50번째줄 객체 이용
         */
         /*
         UserDetails userDetails = User.builder()
