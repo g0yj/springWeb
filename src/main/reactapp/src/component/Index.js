@@ -28,6 +28,8 @@ import Signup from './member/signup'
 import Info from './member/info'
 import BoardList from'./board/BoardList'
 import BoardWrite from'./board/BoardWrite'
+import BoardView from './board/BoardView'
+import BoardUpdate from './board/BoardUpdate'
 
 export default function Index( props ){
     return(<>
@@ -59,6 +61,8 @@ export default function Index( props ){
                     {/*Board*/}
                     <Route path='/board/list' element = { <BoardList /> } />
                     <Route path='/board/write' element = { <BoardWrite /> } />
+                    <Route path='/board/view' element = { <BoardView /> } />
+                    <Route path='/board/update' element = { <BoardUpdate /> } />
                     </Routes >
                 <Footer/>
             </BrowserRouter>

@@ -100,4 +100,16 @@ public class BoardService {
         return true;
     }
 
+    //개별 게시물 출력
+    @Transactional
+    public BoardDto doGet(int bno){
+        Optional<BoardEntity> optionalBoardEntity=boardEntityRepository.findById(bno);
+        if(optionalBoardEntity.isPresent()){
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            BoardDto boardDto = boardEntity.allToDto();
+            return boardDto;
+        }
+        return null;}
+
+
 }
