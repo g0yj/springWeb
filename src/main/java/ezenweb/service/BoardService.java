@@ -2,11 +2,15 @@ package ezenweb.service;
 
 import ezenweb.model.dto.BoardDto;
 import ezenweb.model.dto.MemberDto;
+import ezenweb.model.dto.PageDto;
 import ezenweb.model.entity.BoardEntity;
 import ezenweb.model.entity.MemberEntity;
 import ezenweb.model.repository.BoardEntityRepository;
 import ezenweb.model.repository.MemberEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,15 +62,48 @@ public class BoardService {
 
 
     @Transactional
-    public List<BoardDto> getAll(){
+    public PageDto getAll(int page,String key,String keyword){
+        System.out.println("BoardService.getAll");
+        System.out.println("page = " + page);
+
+        /*JPA 페이징처리 라이브러리
+            1. Pageable: 페이지 인터페이스(구현체 필요!!)
+                        사용이유: Repositry인터페이스가 페이징 처리 시 사용하는 인터페이스가 pageable임. 반환 타입 확인해보셈
+            2. 구현체 :PageRequest
+                        of (현재페이지, 페이지별게시물수)
+                            현재페이지는 0부터 시작, 만약 2일때 페이지마다 게시물 2개씩 출력
+            3. Page :list와 마찬가지로 여러개의 객체를 저장하는 타입
+                       + 추가적인 함수를 지원 (인터페이스 타고 들어가보면 확인 가능)
+                         ㄴ -getTotalPages()
+        */
+        Pageable pageable= PageRequest.of(page-1,2);
+                                //구현체인데 new를 쓰지 않는 이유?! .of에 집중!! PageRequest 안에 of는 static으로 만들어져있음.
+
         //1. 모든 게시물 호출
-        List<BoardEntity> boardEntities = boardEntityRepository.findAll();
+        //List<BoardEntity> boardEntities = boardEntityRepository.findAll();
+        //반환값에 맞게 형변환.
+        //Page<BoardEntity> boardEntities = boardEntityRepository.findAll(pageable);
+        Page<BoardEntity> boardEntities=boardEntityRepository.findBySearch(key,keyword,pageable);
+        System.out.println("여기1 > "+boardEntities);
+
         //2. List<BoardDto>로 변환
         List<BoardDto> boardDtos=new ArrayList<>();
         boardEntities.forEach(e->{
             boardDtos.add(e.allToDto());
         });
-        return boardDtos;
+        //3. 총 페이지수
+        int totalPage=boardEntities.getTotalPages();
+        //4. 총 게시물 수
+        long totalCount=boardEntities.getTotalElements();//요소: 성분/물체의 하나의 단위(=게시물 1개)
+        //5. 페이지 dto 구성해서 axios에 전달
+        PageDto pageDtos = PageDto.builder()
+                .boardDtos(boardDtos)
+                .totalCount(totalCount)
+                .totalPages(totalPage)
+                .build();
+
+        return pageDtos;
+
     }
 
 
