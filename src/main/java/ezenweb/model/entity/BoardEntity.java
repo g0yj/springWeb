@@ -50,8 +50,9 @@ public class BoardEntity extends BaseTime {
                 .bfile(this.bfile)
                 .bview(this.bview)
                 .mno(this.memberEntity.getMno())
-                .cdate(this.getCdate())
-                .udate(this.getUdate())
+                .cdate(toTimeOrDate(this.getCdate())) //basetime에서 만든 함수 확인!
+                .udate(toTimeOrDate(this.getUdate()))
+                .memail(this.memberEntity.getMemail().split("@")[0]) //작성자 아이디[fk연결된거임. 양방향~!]
                 .build();
     }
 

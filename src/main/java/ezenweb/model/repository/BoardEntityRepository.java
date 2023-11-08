@@ -22,7 +22,12 @@ public interface BoardEntityRepository extends JpaRepository<BoardEntity, Intege
     // @Query(value = "select * from board where bno=:bno",nativeQuery = true) //=findById
     // @Query(value = "select * from board where btitle=:btitle",nativeQuery = true) //=findByBtitle
     //@Query(value="select * from board where bcontent= :keyword,", nativeQuery = true) //=findByBcontent
-    @Query(value = "select * from board where bcontent like %:keyword%", nativeQuery = true) //=제목이 포함된
+    //@Query(value = "select * from board where :key like %:keyword%", nativeQuery = true) //=제목이 포함된
+    @Query(value=" select * from board where " +
+            "if(:keyword='', true, "+ //전체검색[조건1]
+            "if(:key ='btitle',btitle like %:keyword%, " + //조건[2]
+            "if(:key ='bcontent', bcontent like %:keyword%,true))) order by cdate desc"//조건[3]
+            ,nativeQuery = true)
     Page<BoardEntity> findBySearch(String key, String keyword,Pageable pageable);
 
 }

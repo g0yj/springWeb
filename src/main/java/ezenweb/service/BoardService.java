@@ -62,7 +62,7 @@ public class BoardService {
 
 
     @Transactional
-    public PageDto getAll(int page,String key,String keyword){
+    public PageDto getAll(int page,String key,String keyword, int view){
         System.out.println("BoardService.getAll");
         System.out.println("page = " + page);
 
@@ -76,7 +76,9 @@ public class BoardService {
                        + 추가적인 함수를 지원 (인터페이스 타고 들어가보면 확인 가능)
                          ㄴ -getTotalPages()
         */
-        Pageable pageable= PageRequest.of(page-1,2);
+                            //PageRequest.of(,,,) 반환타입 보면 sort도 제공함. 이게 정렬하는 방법임. 우린 @query에서 오름차순으로 정렬했기 때문에 여기서는 생략!!
+                            //PageRequest.of(page-1,view,Sort.by(Sort.Direction.desc,"cdate"));
+        Pageable pageable= PageRequest.of(page-1,view);
                                 //구현체인데 new를 쓰지 않는 이유?! .of에 집중!! PageRequest 안에 of는 static으로 만들어져있음.
 
         //1. 모든 게시물 호출
@@ -143,6 +145,8 @@ public class BoardService {
         Optional<BoardEntity> optionalBoardEntity=boardEntityRepository.findById(bno);
         if(optionalBoardEntity.isPresent()){
             BoardEntity boardEntity = optionalBoardEntity.get();
+                //조회수 증가
+            boardEntity.setBview(boardEntity.getBview()+1);
             BoardDto boardDto = boardEntity.allToDto();
             return boardDto;
         }

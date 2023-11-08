@@ -16,15 +16,19 @@ public class BoardController {
 
     @PostMapping("")
     public boolean write(BoardDto boardDto){
-                            //첨부파일 받을 때는 @RequestParam 쓰지 X
+                            //첨부파일 받을 때는 @RequestParam 쓰지 X, @RequestBody 사용하지 않음.
+                            // @RequestBody는 json 전송이고 form은 x-www-form으로 전송됨. 어노테이션 사용 시, null값으로 들어감.
        return boardService.write(boardDto);
     }
 
     @GetMapping("")
-    public PageDto getAll(@RequestParam int page ,@RequestParam String key,@RequestParam String keyword){
+    public PageDto getAll(@RequestParam int page , //js에서 쿼리스트링으로 보냈으니까 @RequestParam으로 받음
+                          @RequestParam String key,
+                          @RequestParam String keyword,
+                          @RequestParam int view){
         System.out.println("BoardController.getAll");
         System.out.println("page = " + page);
-        return boardService.getAll(page,key,keyword);
+        return boardService.getAll(page,key,keyword,view);
     }
 
     @PutMapping("")

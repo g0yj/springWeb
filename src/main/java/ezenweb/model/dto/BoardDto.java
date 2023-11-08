@@ -16,8 +16,10 @@ public class BoardDto {
     private String bfile;
     private int mno;
 
-    private LocalDateTime udate;
-    private LocalDateTime cdate;
+    private String memail;
+
+    private String udate;  //엔티티 변화에 맞춰서 LocalDateTime 형식에서 String으로 형변환 했음!!
+    private String cdate;
 
 
     //dto->entity

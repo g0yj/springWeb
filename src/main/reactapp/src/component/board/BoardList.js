@@ -21,16 +21,30 @@ export default function BoardList( props ){
         boardDtos:[],
         totalPages:0,
         totalCount:0
-    }); //스프링에서 전달해주는 DTO와 일치 시켜주면 보기 편함.
+    }); //스프링에서 전달해주는 DTO와 일치 시켜주면 보기 편함.(풀스택일때추천)
+
+    console.log('pageDto');
+    console.log(pageDto);
 
      // 페이징 처리만 했을 때,
     //const[page,setPage]=useState(1);//페이지 번호 사용
     const[pageInfo,setPageInfo]=useState({
-        page:1, key:'',keyword:''
+        page:1, key:'btitle',keyword:'' ,view:5 //기본값  view: 보여질 페이지 갯수의 기본값(85번째줄 관련)
     }) ;console.log(pageInfo);
 
 
-    //1. axios를 이용한 스프링의 컨트롤러와 통신[실행조건: 컴포넌트 실행됐을 때, 페이지가 바꾸ㅕㅆ을때]
+    //1-1-1. axios를 이용한 스프링컨트롤러와 통신 ->onclick 사용
+    const getBoard=(e)=>{
+        axios.get('/board',{params:pageInfo})
+                .then(r=>{
+                    setPageDto(r.data);
+                })
+    }
+    //1-1-2 컴포넌트가 생성될때 + 의존성배열:page가 변경(주소값이)될때 ([pageInfo.page] 안 넣으면 검색 없이 페이지만 다르게 했어도 실행 안딤.)
+    useEffect(()=>{getBoard();},[pageInfo.page ,pageInfo.view]);
+
+/*
+    //1-2. axios를 이용한 스프링의 컨트롤러와 통신[실행조건: 컴포넌트 실행됐을 때, 페이지가 바꾸ㅕㅆ을때] -> onchange 사용
     useEffect(()=>{
         axios.get('/board',{params:pageInfo })
             .then(r=>{
@@ -42,8 +56,9 @@ export default function BoardList( props ){
                       setPageDto(r.data); //19번째줄 참고
                     })
     },[pageInfo])//페이지가 변경될 때.[의존성배열]
+*/
 
-    //페이징처리 (스프링에게 전달할 객체) - 페이지 번호 클릭했을 때,
+    //2 페이징처리 (스프링에게 전달할 객체) - 페이지 번호 클릭했을 때,
     const onChangeSelect=(e,value)=>{
         console.log(e);console.log(value);
         //페이징 처리만 했을때
@@ -53,8 +68,11 @@ export default function BoardList( props ){
         setPageInfo({...pageInfo}); //새로고침[상태변수의 주소값이 바뀌면 재랜더링]
         }
 
-    //검색 버튼을 눌렀을때 -
-    const onSearch =(e)=>{}
+    //3 검색 버튼을 눌렀을때 -> 첫 페이지 1페이지로 초기화
+    const onSearch =(e)=>{
+        setPageInfo({...pageInfo,page:1}) //검색했는데 3페이지부터 나옴 x
+        getBoard();}
+
 
 
 
@@ -62,7 +80,29 @@ export default function BoardList( props ){
     <>
      <h3>게시물목록</h3>
      <a href="/board/write">글쓰기</a>
-    <p>현재 페이지{pageInfo.page}</p>
+    <p>현재 페이지{pageInfo.page} totalCount:{pageDto.totalCount}</p>
+
+    <select value={pageInfo.view} onChange={(e)=>{setPageInfo({...pageInfo,view:e.target.value})}}>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+    </select>
+
+
+   {/* //검색제거버튼 (여러가지 방법 있.  92번째, 102번째)*/}
+    <button type="button"
+        onClick={(e)=>{
+                        setPageInfo({...pageInfo,key:'',keyword:'',page:1}
+                        );
+                        getBoard();
+                    }
+             }
+    >
+    검색제거</button>
+    {/*
+    onClick={(e)=>{window.location.href="/board/list";}} //새로고침으로 하는 방법
+    */}
+
      <TableContainer component={Paper}>
        <Table sx={{ minWidth: 650 }} aria-label="simple table">
          <TableHead>
@@ -86,7 +126,7 @@ export default function BoardList( props ){
                 <Link to= {"/board/view?bno="+row.bno}>{row.btitle}</Link>
                 </TableCell>
 
-               <TableCell align="right">{row.mno}</TableCell>
+               <TableCell align="right">{row.memail}</TableCell>
                <TableCell align="right">{row.cdate}</TableCell>
                <TableCell align="right">{row.bview}</TableCell>
              </TableRow>
@@ -95,7 +135,9 @@ export default function BoardList( props ){
        </Table>
      </TableContainer>
      <div style={{display:'flex',flexDirection: 'column', alignItems:'center', margin:'10px'}}>
-     <Pagination count={pageDto.totalPages} onChange={onChangeSelect}/>
+     {/**/}
+     <Pagination page={pageInfo.page} count={pageDto.totalPages} onChange={onChangeSelect}/>
+
      {/*검색기능*/}
      <div>
         <select
@@ -125,4 +167,9 @@ export default function BoardList( props ){
     스타일 구성 요소 사용 : npm install @mui/material @mui/styled-engine-sc styled-components
 
 
+*/
+
+/*
+useeffect가 pageinfo에 의존하고 있음. 의존성 배열에다 넣어 pageㅑiifo가 변경되서 useeffect재실행됨.
+페이지가 바뀌었을때, 검색어 키갑 바겼을때 키워드 바뀌었을때 변경.
 */
