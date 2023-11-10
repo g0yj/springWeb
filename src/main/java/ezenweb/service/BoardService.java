@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +29,27 @@ public class BoardService {
     private MemberService memberService;
     @Autowired
     private MemberEntityRepository memberEntityRepository;
+    @Autowired
+    FileService fileService;
+
 
     @Transactional//양방향에서 setter쓰니까 트랜잭셔널 꼭 해줘야됨!!!!!!! ()
     public boolean write(BoardDto boardDto){
-     //1. FK 키의 엔티티를 찾는다(로그인된 멤버찾기)======================================================
+        /*
+            //FileService.class 따로 만들어서 사용
+        System.out.println(boardDto.getFile().getName());
+        System.out.println(boardDto.getFile().getOriginalFilename());//첨부파일 실제 파일명
+        System.out.println(boardDto.getFile().getSize()); //파일 용량[바이트]
+        System.out.println(boardDto.getFile().getContentType());//확장자
+        //파일클래스를 이용한 파일 경로 설정
+        File file = new File("C:\\java\\"+boardDto.getFile().getOriginalFilename());
+        try {
+           boardDto.getFile().transferTo(file);
+            System.out.println("파일업로드 성공");
+       } catch (Exception e){System.out.println("파일 업로드실패"+e);}
+        */
+
+        //1. FK 키의 엔티티를 찾는다(로그인된 멤버찾기)======================================================
                 //[FK로 사용할 PK를 알고 있어야함. 세션이나 매개변수로 가져오기]
                 //-> 작성자PK=로그인 세션
                 //-> 카테고리번호 = 입력받은 DTO, 매개변수로 가져옴.
@@ -55,10 +73,18 @@ public class BoardService {
         memberEntityOptional.get().getBoardEntityList().add(boardEntity);
         //양방향저장끝
 
-        if(boardEntity.getBno()>=1){return true;}
+        if(boardEntity.getBno()>=1){
+            //게시물 쓰기 성공 시 파일 처리
+            String filename=fileService.fileUpload(boardDto.getFile());
+            //파일처리 결과를 db에 저장
+            if (filename != null) {boardEntity.setBfile(filename);}
+
+        return true;
+    }
         return false;
 
-    }
+    }//m
+
 
 
     @Transactional
@@ -86,7 +112,7 @@ public class BoardService {
         //반환값에 맞게 형변환.
         //Page<BoardEntity> boardEntities = boardEntityRepository.findAll(pageable);
         Page<BoardEntity> boardEntities=boardEntityRepository.findBySearch(key,keyword,pageable);
-        System.out.println("여기1 > "+boardEntities);
+       // System.out.println("여기1 > "+boardEntities);
 
         //2. List<BoardDto>로 변환
         List<BoardDto> boardDtos=new ArrayList<>();
@@ -151,6 +177,8 @@ public class BoardService {
             return boardDto;
         }
         return null;}
+
+
 
 
 }

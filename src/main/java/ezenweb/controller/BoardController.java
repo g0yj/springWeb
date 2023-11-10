@@ -3,6 +3,7 @@ package ezenweb.controller;
 import ezenweb.model.dto.BoardDto;
 import ezenweb.model.dto.PageDto;
 import ezenweb.service.BoardService;
+import ezenweb.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ public class BoardController {
 
     @PostMapping("")
     public boolean write(BoardDto boardDto){
+        System.out.println("글쓰기 컨트롤러");
+        System.out.println("boardDto = " + boardDto);
                             //첨부파일 받을 때는 @RequestParam 쓰지 X, @RequestBody 사용하지 않음.
                             // @RequestBody는 json 전송이고 form은 x-www-form으로 전송됨. 어노테이션 사용 시, null값으로 들어감.
        return boardService.write(boardDto);
@@ -44,4 +47,11 @@ public class BoardController {
     @GetMapping("doGet")
     public BoardDto doGet(@RequestParam int bno){return boardService.doGet(bno);}
                             //js에서 파라미터로 들어옴
+
+    // 첨부파일 다운로드 요청
+    @Autowired private FileService fileService;
+    @GetMapping("/filedownload")
+    public void filedownload(@RequestParam String uuidFile){
+        fileService.fileDownload((uuidFile));
+    }
 }

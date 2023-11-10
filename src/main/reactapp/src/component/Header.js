@@ -67,6 +67,8 @@ export default function Header( props ){
                 <li><Link to='/example/day02/todoList'>TODO</Link></li>
                 <li><Link to='/example/day02/CommentList'>비회원게시판</Link></li>
                 <li><Link to='/board/list'>회원게시판</Link></li>
+                <li><Link to='/admin/product'>제품관리</Link></li>
+
 
                 {/* 삼항연산자-> 조건?참:거짓*/}
 

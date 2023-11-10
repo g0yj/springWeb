@@ -42,6 +42,11 @@ export default function BoardView( props ){
             <h3>{bno}번 개별 게시물 </h3>
             <div>{board.btitle}</div>
             <div>{board.bcontent}</div>
+            <div>
+                <a href={"/board/filedownload?uuidFile="+board.bfile}>
+                    {board.bfile}
+                </a>
+            </div>
             {/*삭제와 수정은 본인만 가능 - 삼항연산자를 이용한 컴포넌트 출력*/}
             {
                 board.mno==loginMno?

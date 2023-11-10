@@ -310,13 +310,13 @@ public class MemberService implements
 
         --------------------------------------------------------------------- */
         //시큐리티 사용할때는 일단 서블릿 세션이 아니고 시큐리티 저장소를 이용함----------------------------------------------------------
-        System.out.println("시큐리티에 저장된 세션 정보 저장소: "+SecurityContextHolder.getContext());
-        System.out.println("시큐리티에 저장된 세션 정보 저장소에 저장된 인증: "+SecurityContextHolder.getContext().getAuthentication());
-        System.out.println("시큐리티에 저장된 세션 정보 저장소에 저장된 인증 호출(본인): "+SecurityContextHolder.getContext().getAuthentication().getPrincipal()); //해당 서비스를 호출한 HTTP
+        //System.out.println("시큐리티에 저장된 세션 정보 저장소: "+SecurityContextHolder.getContext());
+        //System.out.println("시큐리티에 저장된 세션 정보 저장소에 저장된 인증: "+SecurityContextHolder.getContext().getAuthentication());
+       // System.out.println("시큐리티에 저장된 세션 정보 저장소에 저장된 인증 호출(본인): "+SecurityContextHolder.getContext().getAuthentication().getPrincipal()); //해당 서비스를 호출한 HTTP
 
         //인증에 성공한 정보 호출[=세션호출]
         Object o =SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(o.toString());
+        //System.out.println(o.toString());
         //1.만약에 인증 결과가 실패이면/ 없으면
         if(o.equals("anonymousUser")){ //로그인 실패하면 console에 anonymousUser찍힘
             return null; //로그인 안했..
