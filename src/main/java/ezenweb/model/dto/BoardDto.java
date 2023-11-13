@@ -3,6 +3,7 @@ package ezenweb.model.dto;
 import ezenweb.model.entity.BoardEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
@@ -16,8 +17,12 @@ public class BoardDto {
     private String bfile;
     private int mno;
 
-    private LocalDateTime udate;
-    private LocalDateTime cdate;
+    private String memail;// 작성자아이디
+    //스프링이 지원하는 인터페이스 사용[MultipartFile]
+    private MultipartFile file;
+
+    private String udate;  //엔티티 변화에 맞춰서 LocalDateTime 형식에서 String으로 형변환 했음!!
+    private String cdate;
 
 
     //dto->entity

@@ -23,7 +23,7 @@ export default function BoardWrite( props ){
             <form className="boardForm">
                 <input type="text" placeholder="제목" name="btitle"/> <br/>
                 <textarea placeholder="내용" name="bcontent"></textarea> <br/>
-                <input type="file" />
+                <input type="file" name="file" /><br/>
                 <button type="button" onClick={boardWrite}>등록</button>
             </form>
         </div>
@@ -34,6 +34,6 @@ export default function BoardWrite( props ){
 /*
 재목
 컨텐츠
-첨부파일
+첨부파일 - 별도의 라이브러리 필요 x
 
 */
