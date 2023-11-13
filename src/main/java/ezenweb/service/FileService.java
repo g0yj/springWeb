@@ -20,7 +20,12 @@ import java.util.UUID;
 @Service
 public class FileService {
     //0. 파일경로 [배포전]
-    private  String fileRootPath="C:\\java\\";
+    //private  String fileRootPath="C:\\java\\"; 이미지 브라우저에서 출력하는거 하기 전
+    //build-resources-main-static-static-media-절대경로로!
+        // 상품 출력 이미지 관련해서 (ProductService에서 상품출력)
+        // (한 서버에서 다 하고 있으니까 로컬로 되어있는게 맞긴함.) .스프링은 리액트 요청 시 모든 view를 한번에 줌. 거기 안에 모든 이미지가 있기 때문에 이미지 별도로 요청 안해도됨!!
+    private  String fileRootPath= "C:\\Users\\504\\Desktop\\ezen_webspring_2023_B\\build\\resources\\main\\static\\static\\media\\";
+
     //1. 업로드
     public String fileUpload(MultipartFile multipartFile) {
         //0. 유효성검사

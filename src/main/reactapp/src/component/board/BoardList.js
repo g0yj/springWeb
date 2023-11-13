@@ -135,7 +135,7 @@ export default function BoardList( props ){
        </Table>
      </TableContainer>
      <div style={{display:'flex',flexDirection: 'column', alignItems:'center', margin:'10px'}}>
-     {/**/}
+     {/*count:전체 페이지수 onChange:페이지번호를 클릭햇을때 이벤트*/}
      <Pagination page={pageInfo.page} count={pageDto.totalPages} onChange={onChangeSelect}/>
 
      {/*검색기능*/}

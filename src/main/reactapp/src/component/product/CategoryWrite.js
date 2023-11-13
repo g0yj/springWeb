@@ -19,10 +19,12 @@ for (let i in array){
     copyArray[i]=array[i]
 }
 
-*/
 for (let i of array){
-    copyArray[i]=array[i]
+    copyArray.push(i)
 }
+*/
+array.forEach(i=>{})
+
 console.log(copyArray)
 //console.log(array)
 //console.log(copyArray)
