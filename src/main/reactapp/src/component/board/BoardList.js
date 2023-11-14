@@ -28,7 +28,7 @@ export default function BoardList( props ){
 
      // 페이징 처리만 했을 때,
     //const[page,setPage]=useState(1);//페이지 번호 사용
-    const[pageInfo,setPageInfo]=useState({
+    const[pageInfo,setPageInfo]=useState({ //스프링에가 전달 할 객체
         page:1, key:'btitle',keyword:'' ,view:5 //기본값  view: 보여질 페이지 갯수의 기본값(85번째줄 관련)
     }) ;console.log(pageInfo);
 

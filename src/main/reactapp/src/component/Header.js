@@ -4,9 +4,49 @@ import {Link} from 'react-router-dom';
 import styles from '../css/header.css'
 
 import axios from 'axios';
-import{useState,useEffect} from 'react'
+import{useState,useEffect,useRef} from 'react'
+                        //useRef : 해당 컴포넌트가 재랜더링 할때 상태 유지
 
 export default function Header( props ){
+
+        let 변수 =10; //지역변수임
+        console.log(변수)  //10 출력
+
+        let ref변수 = useRef(10);
+        console.log(ref변수);//{current:10} 객체로 저장
+        console.log(ref변수.current); //10 출력
+
+
+
+//===============================소켓관련S======================================================================//
+
+    //1. 클라이언트소켓 만들기
+   // useEffect(()=>{
+        let 클라이언트소켓 = new WebSocket("ws://localhost:80/chat"); //서버소켓과 주소가 동일하면 연동됨!!
+        console.log(클라이언트소켓);//클라이언트소켓은 onopen 등을 가지고 있음(null). 이걸 커스텀해서 사용하기(추후행동)
+
+        //1. 서버소켓과 연동 성공 했을 때 이후 메소드 정의
+        클라이언트소켓.onopen=(e)=>{console.log(e)}
+        //2. 서버소켓과 세션 오류가 발생했을 때 이후 메소드 정의
+        클라이언트소켓.onerror=(e)=>{console.log(e)}
+        //3. 서버소켓과 연동이 끊겼을 때
+        클라이언트소켓.onclose=(e)=>{console.log(e)}
+        //4. 서보소켓으로부터 메세지를 받았을때
+        클라이언트소켓.onmessage=(e)=>{console.log(e)}
+        //5. 메시지 보내기
+        //클라이언트소켓.send("안녕");
+
+
+    //},[])
+
+    //2. 클라이언트소켓 메시지 전송
+    const msgSend=(e)=>{
+        클라이언트소켓.send("안녕");
+    }
+//===============================소켓관련E======================================================================//
+
+
+
     //1-1. 로그인 상태를 저장할 상태변수 선언
     let[login,setLogin] = useState(null);
 
@@ -61,6 +101,7 @@ export default function Header( props ){
 
     return(<>
         <header>
+            <button type="button" onClick={msgSend}>전송</button>
             <h2><Link to='/'>이젠리액트</Link></h2>
             <ul>
                 <li><Link to='/example'>리택트예제</Link></li>
