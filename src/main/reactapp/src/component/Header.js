@@ -8,18 +8,18 @@ import{useState,useEffect,useRef} from 'react'
                         //useRef : 해당 컴포넌트가 재랜더링 할때 상태 유지
 
 export default function Header( props ){
-
-        let 변수 =10; //지역변수임
+/*
+        let 변수 =10; //지역변수임 : 함수 안에서 선언되었으므로 함수 재실행 재랜더링 시 초기화 반복적으로 이뤄짐
         console.log(변수)  //10 출력
 
-        let ref변수 = useRef(10);
+        let ref변수 = useRef(10); // 함수 안에서 선언이 되었지만 해당 컴포넌트 업데이트(재랜더링)될 때 초기화 안됨. 웹소켓은 반복적으로 초기화가 되면 안되니까 일단 변수 보다는 useRef에 저장하면 좀 더 효율적인 메모리 관리가 가능
         console.log(ref변수);//{current:10} 객체로 저장
         console.log(ref변수.current); //10 출력
 
+*/
 
-
-//===============================소켓관련S======================================================================//
-
+//===============================소켓관련S[Index.js로 이동]======================================================================//
+/*
     //1. 클라이언트소켓 만들기
    // useEffect(()=>{
         let 클라이언트소켓 = new WebSocket("ws://localhost:80/chat"); //서버소켓과 주소가 동일하면 연동됨!!
@@ -43,6 +43,7 @@ export default function Header( props ){
     const msgSend=(e)=>{
         클라이언트소켓.send("안녕");
     }
+    */
 //===============================소켓관련E======================================================================//
 
 
@@ -101,7 +102,7 @@ export default function Header( props ){
 
     return(<>
         <header>
-            <button type="button" onClick={msgSend}>전송</button>
+
             <h2><Link to='/'>이젠리액트</Link></h2>
             <ul>
                 <li><Link to='/example'>리택트예제</Link></li>

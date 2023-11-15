@@ -36,5 +36,5 @@ public class ProductEntity extends BaseTime{
     //양방향만들기
     @OneToMany(fetch =FetchType.LAZY, mappedBy = "productEntity", cascade = CascadeType.ALL)
     @ToString.Exclude//순환방지 PK쪽에 거는 걸 추천 (FK쪽 걸어도 양쪽 다 걸어도 ㄱㅊ긴함)
-    private List<ProductImgEntity> productImgEntityList  = new ArrayList<>();
+    List<ProductImgEntity> productImgEntityList  = new ArrayList<>();
 }
